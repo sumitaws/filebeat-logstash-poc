@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.15.0
+    container_name: logstash
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./efs-data:/usr/share/logstash/efs-data
+    environment:
+      - AWS_REGION=us-east-1
+    ports:
+      - "5044:5044"
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.15.0
+    container_name: filebeat
+    user: root
+    volumes:
+      - /home/ec2-user/filebeat-logstash-poc/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /home/ec2-user/filebeat-logstash-poc/logs:/var/log/myapp:ro
+      - /home/ec2-user/filebeat-logstash-poc/filebeat-data:/usr/share/filebeat/data 
+    depends_on:
+      - logstash
+

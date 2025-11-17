@@ -1,0 +1,64 @@
+###################################
+# User Environment Files
+###################################
+.bash_history
+.bash_logout
+.bash_profile
+.bashrc
+.vim/
+.viminfo
+.ssh/
+.docker/
+
+###################################
+# OS / System Files
+###################################
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+ehthumbs.db
+
+###################################
+# Logs & Temp Files
+###################################
+*.log
+*.tmp
+*.temp
+*.bak
+*.old
+*.pid
+
+###################################
+# Python
+###################################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+build/
+dist/
+.python-version
+.env
+.venv/
+venv/
+
+###############################
+# Ignore Filebeat Data
+filebeat-logstash-poc/filebeat-data/
+
+# Ignore ClickHouse Data
+fluentd-elk-clickhouse-poc/clickhouse/data/
+fluentd-elk-clickhouse-poc/clickhouse/logs/
+fluentd-elk-clickhouse-poc/clickhouse/tmp/
+
+# Ignore container state directories
+**/data/
+**/registry/
+**/metadata/
+**/metadata_dropped/
+**/store/
+**/flags/
+

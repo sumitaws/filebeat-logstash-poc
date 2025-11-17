@@ -1,0 +1,15 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/myapp/*.log
+    scan_frequency: 10s
+    # Force reading old files
+    ignore_older: 0
+    close_inactive: 1h
+    # Start reading from the beginning
+    tail_files: false
+
+output.logstash:
+  hosts: ["logstash:5044"]
+

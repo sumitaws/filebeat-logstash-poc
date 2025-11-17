@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.6
+    container_name: clickhouse
+    volumes:
+      - ./clickhouse/data:/var/lib/clickhouse
+      - ./clickhouse/init:/docker-entrypoint-initdb.d
+    ports:
+      - "8123:8123"  # HTTP interface (optional for testing or direct querying)
+      - "9000:9000"  # Native protocol for Fluentd ClickHouse plugin
+
+  fluentd:
+    user: root
+    build: ./fluentd
+    container_name: fluentd
+    volumes:
+      - ./fluentd/log:/fluentd/log            # Your custom Nginx logs go here
+      - ./fluentd/conf:/fluentd/etc           # fluent.conf must be in ./fluentd/conf/
+    ports:
+      - "24224:24224"       # Fluentd TCP input (if you use it later)
+      - "24224:24224/udp"   # Fluentd UDP input (optional)
+    depends_on:
+      - clickhouse
+
